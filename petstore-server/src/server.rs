@@ -1,14 +1,35 @@
+use std::fs;
 use std::sync::Arc;
+use axum::routing::get;
+use axum_swagger_ui::swagger_ui;
 use tokio::net::TcpListener;
 use tokio::signal;
+use tracing::{event, info, trace, warn, Level};
 use crate::api;
 
-pub async fn start_server(addr: &str) {
-    // initialize tracing
-    tracing_subscriber::fmt::init();
+pub async fn start_server(addr: &str, openapi_path: &str) {
 
     // Init Axum router
-    let app = petstoreapi::server::new(Arc::new(api::ServerImpl {}));
+    let mut app = petstoreapi::server::new(Arc::new(api::ServerImpl {}));
+
+    let metadata = fs::metadata(openapi_path);
+
+    match metadata {
+        Err(_) => warn!("cannot find OpenAPI file (or not specified), therefore not adding swagger-ui route"),
+        Ok(metadata) => {
+            info!( "OpenAPI path is file: {}", metadata.is_file());
+            let doc_url = "swagger/openapi.yaml";
+
+            if let Ok(openapi_file) = fs::read_to_string(openapi_path) {
+                trace!("file contents:");
+                trace!("{}", openapi_file);
+                app = app.route("/swagger-ui", get(|| async { swagger_ui(doc_url) }))
+                    .route(format!("/{doc_url}").as_str(), get(|| async { openapi_file }));
+            } else {
+                warn!("cannot read OpenApi file");
+            }
+        }
+    }
 
     // Add layers to the router
     //let app = app.layer(...);

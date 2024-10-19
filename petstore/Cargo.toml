@@ -6,3 +6,5 @@ edition = "2021"
 [dependencies]
 petstoreserver = { path= "../petstore-server" }
 tokio = "1.40.0"
+tracing-subscriber = "0.3"
+tracing = "0.1.40"
