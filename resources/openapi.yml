@@ -1,6 +1,7 @@
 openapi: 3.0.2
 servers:
-  - url: /v3
+  - url: http://localhost:8080/v3
+    description: Development server
 info:
   description: |-
     This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about

@@ -688,14 +688,8 @@ checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
 name = "petstore"
 version = "0.1.0"
 dependencies = [
- "async-trait",
- "axum",
- "axum-extra",
- "bytes",
- "http",
- "petstoreapi",
+ "petstoreserver",
  "tokio",
- "tracing-subscriber",
 ]
 
 [[package]]
@@ -724,6 +718,20 @@ dependencies = [
  "tracing-subscriber",
  "uuid",
  "validator",
+]
+
+[[package]]
+name = "petstoreserver"
+version = "0.1.0"
+dependencies = [
+ "async-trait",
+ "axum",
+ "axum-extra",
+ "bytes",
+ "http",
+ "petstoreapi",
+ "tokio",
+ "tracing-subscriber",
 ]
 
 [[package]]

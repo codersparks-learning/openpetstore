@@ -5,6 +5,8 @@
       <sourceFolder url="file://$MODULE_DIR$/petstore-api/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/petstore/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/openpetstore-impl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/petstore-server/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

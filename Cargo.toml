@@ -3,4 +3,4 @@ resolver = "2"
 members = [
     "petstore",
     "petstore-api"
-]
+, "petstore-server"]
