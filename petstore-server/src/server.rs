@@ -4,7 +4,7 @@ use axum::routing::get;
 use axum_swagger_ui::swagger_ui;
 use tokio::net::TcpListener;
 use tokio::signal;
-use tracing::{event, info, trace, warn, Level};
+use tracing::{info, trace, warn};
 use crate::api;
 
 pub async fn start_server(addr: &str, openapi_path: &str) {
