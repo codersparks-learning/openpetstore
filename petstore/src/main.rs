@@ -1,5 +1,5 @@
 use std::env;
-use tracing::{debug, event, info, Level};
+use tracing::{debug,  info};
 use petstoreserver::server::start_server;
 use tracing_subscriber;
 

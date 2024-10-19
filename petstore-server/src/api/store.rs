@@ -1,7 +1,9 @@
+use std::collections::HashMap;
 use async_trait::async_trait;
 use axum::extract::Host;
 use axum_extra::extract::CookieJar;
 use http::Method;
+use tracing::{info, instrument};
 use petstoreapi::apis::store::{DeleteOrderResponse, GetInventoryResponse, GetOrderByIdResponse, PlaceOrderResponse};
 use petstoreapi::models::{DeleteOrderPathParams, GetOrderByIdPathParams, Order};
 use crate::api::ServerImpl;
@@ -13,8 +15,18 @@ impl petstoreapi::apis::store::Store for ServerImpl {
         todo!()
     }
 
+    #[instrument]
     async fn get_inventory(&self, method: Method, host: Host, cookies: CookieJar) -> Result<GetInventoryResponse, String> {
-        todo!()
+
+        info!("Using mocked data in function");
+        let mut inventory = HashMap::new();
+
+        inventory.insert("1".to_string(), 2);
+        inventory.insert("2".to_string(), 20);
+
+        let response = GetInventoryResponse::Status200_SuccessfulOperation(inventory);
+
+        Ok(response)
     }
 
     async fn get_order_by_id(&self, method: Method, host: Host, cookies: CookieJar, path_params: GetOrderByIdPathParams) -> Result<GetOrderByIdResponse, String> {

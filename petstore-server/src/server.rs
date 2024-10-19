@@ -2,6 +2,7 @@ use std::fs;
 use std::sync::Arc;
 use axum::routing::get;
 use axum_swagger_ui::swagger_ui;
+use http::header;
 use tokio::net::TcpListener;
 use tokio::signal;
 use tracing::{info, trace, warn};
@@ -18,13 +19,13 @@ pub async fn start_server(addr: &str, openapi_path: &str) {
         Err(_) => warn!("cannot find OpenAPI file (or not specified), therefore not adding swagger-ui route"),
         Ok(metadata) => {
             info!( "OpenAPI path is file: {}", metadata.is_file());
-            let doc_url = "swagger/openapi.yaml";
+            let doc_url = "/swagger/openapi.yaml";
 
             if let Ok(openapi_file) = fs::read_to_string(openapi_path) {
                 trace!("file contents:");
                 trace!("{}", openapi_file);
-                app = app.route("/swagger-ui", get(|| async { swagger_ui(doc_url) }))
-                    .route(format!("/{doc_url}").as_str(), get(|| async { openapi_file }));
+                app = app.route("/swagger-ui", get(|| async { ([(header::CONTENT_TYPE, "text/html")], swagger_ui(doc_url)) }))
+                    .route(format!("{doc_url}").as_str(), get(|| async { openapi_file }));
             } else {
                 warn!("cannot read OpenApi file");
             }
